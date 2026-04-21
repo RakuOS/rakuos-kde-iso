@@ -21,9 +21,17 @@ workflow:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push"'
       when: never
+    - if: '$CI_COMMIT_BRANCH == "rakuosel"'
+      variables:
+        JOB_IMAGE: "quay.io/centos/centos:stream10"
+        BUILDER_DISTRO: "centos"
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
     - if: '$CI_PIPELINE_SOURCE == "web"'
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - when: always
+      variables:
+        JOB_IMAGE: "quay.io/fedora/fedora:latest"
+        BUILDER_DISTRO: "fedora"
     - when: never
 
 variables:
@@ -101,10 +109,6 @@ stages:
       export BUILD_DATE="$(date -u +%Y.%m.%d)"
       echo "Using image tag: ${BRANCH_SLUG}"
   rules:
-    - if: '$CI_COMMIT_BRANCH == "rakuosel"'
-      variables:
-        JOB_IMAGE: "quay.io/centos/centos:stream10"
-        BUILDER_DISTRO: "centos"
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
     - if: '$CI_COMMIT_BRANCH == "staging"'
