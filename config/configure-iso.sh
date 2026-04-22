@@ -27,6 +27,22 @@ dnf install -y --refresh "${PACKAGES[@]}"
 # Utilities for displaying a dialog prompting users to review secure boot documentation
 dnf install -qy --setopt=install_weak_deps=0 qrencode yad
 
+# The installed image already carries the real prebaked overlay state.
+# For the live squashfs, wipe that state back out so the live environment stays
+# simple and does not try to carry a prebaked installed-system overlay around.
+echo "Resetting RakuOS overlay state for live ISO..."
+rm -rf /var/lib/rakuos/overlay
+rm -f /var/lib/rakuos/overlay.state
+rm -f /var/lib/rakuos/overlay.dirty
+rm -f /var/lib/rakuos/pkgcache.migrated
+rm -f /var/lib/rakuos/setup-complete
+rm -rf /var/cache/libdnf5
+mkdir -p /var/lib/rakuos
+if [[ -f /usr/share/rakuos/packages-live.list ]]; then
+    cp /usr/share/rakuos/packages-live.list /var/lib/rakuos/packages.list
+    sed -i -e '$a\' /var/lib/rakuos/packages.list
+fi
+
 # Variables
 imageref="$(podman images --format '{{ index .Names 0 }}\n' 'rakuos*' | head -1)"
 imageref="${imageref##*://}"
@@ -188,10 +204,8 @@ echo "Copying kde-specific system files..."
 cp -a /root/packages/installer/system_files/kde/. /
 
 # Change default pins for KDE
-if [[ $desktop_env == kde ]]; then
-    sed -i '/const allPanels/,$d' /usr/share/plasma/layout-templates/org.kde.plasma.desktop.defaultPanel/contents/layout.js
-    sed -i '$r /usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/rakuos-pins.js' /usr/share/plasma/layout-templates/org.kde.plasma.desktop.defaultPanel/contents/layout.js
-fi
+sed -i '/const allPanels/,$d' /usr/share/plasma/layout-templates/org.kde.plasma.desktop.defaultPanel/contents/layout.js
+sed -i '$r /usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/rakuos-pins.js' /usr/share/plasma/layout-templates/org.kde.plasma.desktop.defaultPanel/contents/layout.js
 
 ###############################
 #remove rakuos-welcome automatic launch for live environment
