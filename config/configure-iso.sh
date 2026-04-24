@@ -5,7 +5,7 @@ set -exo pipefail
 source /etc/os-release
 
 # Import Terra keys
-    echo "RakuOS overlay sync: importing Terra GPG keys for Fedora ${fedora_version}..."
+    echo "RakuOS overlay sync: importing Terra GPG keys for Fedora ${VERSION_ID}..."
     rpm --import "https://repos.fyralabs.com/terra${VERSION_ID}/key.asc"
     rpm --import "https://repos.fyralabs.com/terra${VERSION_ID}-mesa/key.asc"
     rpm --import "https://repos.fyralabs.com/terra${VERSION_ID}-multimedia/key.asc"
