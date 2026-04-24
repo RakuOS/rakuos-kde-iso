@@ -15,6 +15,10 @@ source /etc/os-release
 systemctl disable --now rakuos-overlay-sync.service \
           rakuos-overlay-setup.service
 
+# sudo requires drop-in files to be owned by root and not be writable by others
+chown root:root /etc/sudoers.d/rakuos-software
+chmod 0440 /etc/sudoers.d/rakuos-software
+
 # Remove all versionlocks, in order to avoid dependency issues
 dnf -qy versionlock clear
 
