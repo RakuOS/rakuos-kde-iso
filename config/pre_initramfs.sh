@@ -28,6 +28,27 @@ kernel_pkgs=(
     kernel-p03-v4-modules
     kernel-p03-v4-modules-core
     kernel-p03-v4-modules-extra
+    kernel-p03-gcc
+    kernel-p03-gcc-core
+    kernel-p03-gcc-devel
+    kernel-p03-gcc-devel-matched
+    kernel-p03-gcc-modules
+    kernel-p03-gcc-modules-core
+    kernel-p03-gcc-modules-extra
+    kernel-p03-gcc-v3
+    kernel-p03-gcc-v3-core
+    kernel-p03-gcc-v3-devel
+    kernel-p03-gcc-v3-devel-matched
+    kernel-p03-gcc-v3-modules
+    kernel-p03-gcc-v3-modules-core
+    kernel-p03-gcc-v3-modules-extra
+    kernel-p03-gcc-v4
+    kernel-p03-gcc-v4-core
+    kernel-p03-gcc-v4-devel
+    kernel-p03-gcc-v4-devel-matched
+    kernel-p03-gcc-v4-modules
+    kernel-p03-gcc-v4-modules-core
+    kernel-p03-gcc-v4-modules-extra
 )
 dnf -y versionlock delete "${kernel_pkgs[@]}" 2>/dev/null || true
 dnf --setopt=protect_running_kernel=False -y remove "${kernel_pkgs[@]}" 2>/dev/null || true
@@ -56,6 +77,24 @@ dnf -y install \
 --exclude=kernel-p03-v4-modules \
 --exclude=kernel-p03-v4-modules-core \
 --exclude=kernel-p03-v4-modules-extra \
+--exclude=kernel-p03-gcc \
+--exclude=kernel-p03-gcc-core \
+--exclude=kernel-p03-gcc-devel \
+--exclude=kernel-p03-gcc-devel-matched \
+--exclude=kernel-p03-gcc-modules \
+--exclude=kernel-p03-gcc-modules-core \
+--exclude=kernel-p03-gcc-modules-extra \
+--exclude=kernel-p03-gcc-v3 \
+--exclude=kernel-p03-gcc-v3-core \
+--exclude=kernel-p03-gcc-v3-devel \
+--exclude=kernel-p03-gcc-v3-devel-matched \
+--exclude=kernel-p03-gcc-v3-modules \
+--exclude=kernel-p03-gcc-v3-modules-core \
+--exclude=kernel-p03-gcc-v3-modules-extra \
+--exclude=kernel-p03-gcc-v4 \
+--exclude=kernel-p03-gcc-v4-core \
+--exclude=kernel-p03-gcc-v4-devel \
+--exclude=kernel-p03-gcc-v4-devel-matched \
     virtualbox-guest-additions \
     amd-gpu-firmware \
     amd-ucode-firmware \
