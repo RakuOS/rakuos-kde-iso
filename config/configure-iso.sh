@@ -17,8 +17,8 @@ chmod 0440 /etc/sudoers.d/secure-path
 # Remove all versionlocks to avoid dependency issues
 rum -qy versionlock clear
 
-# Install RakuOS installer (Qt frontend + common backend + fisherman)
-rum install -qy rakuos-installer-qt
+# Install the RakuOS installer (Kirigami frontend for the Plasma live session + common backend)
+rum install -qy rakuos-installer-kirigami
 
 # Mask overlay services so they cannot be started or pulled in on the live ISO
 systemctl mask rakuos-overlay-sync.service rakuos-overlay-mount.service
